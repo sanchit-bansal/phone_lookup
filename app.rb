@@ -1,9 +1,10 @@
-require "pry"
 require "sinatra"
 require "sinatra/json"
 
-require "./services/phone_number_extractor"
+require "pry" if development?
 require "sinatra/reloader" if development?
+
+require "./services/phone_number_extractor"
 
 post "/matches" do
   json(

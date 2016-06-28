@@ -13,6 +13,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
       spoon (~> 0.0)
+    puma (3.4.0-java)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -56,6 +57,7 @@ PLATFORMS
 
 DEPENDENCIES
   pry
+  puma
   rspec
   sinatra
   sinatra-contrib

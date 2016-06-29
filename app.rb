@@ -7,7 +7,5 @@ require "sinatra/reloader" if development?
 require "./services/phone_number_extractor"
 
 post "/matches" do
-  json(PhoneNumberExtractor.new(params[:text])
-    .matches
-    .map(&:to_h))
+  json(PhoneNumberExtractor.matches(params[:text]).map(&:to_h))
 end

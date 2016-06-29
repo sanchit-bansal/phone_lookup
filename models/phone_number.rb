@@ -8,7 +8,7 @@ java_import com.google.i18n.phonenumbers.prefixmapper.PrefixFileReader
 java_import com.google.i18n.phonenumbers.PhoneNumberUtil
 java_import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper
 
-class PhoneNumberWrapper
+class PhoneNumber
   # Wrapper for the weirdness of using the Java libphonenumber library
   def initialize(match)
     @match = match
@@ -36,18 +36,19 @@ class PhoneNumberWrapper
   end
 
   def number_type
-    @number_type||= phone_util.getNumberType(match.number).toString
+    @number_type ||= phone_util.getNumberType(match.number).toString
   end
 
 private
   attr_reader :match
 
   def carrier_mapper
-    @carrier_mapper||= PhoneNumberToCarrierMapper.getInstance()
+    # Java class
+    @carrier_mapper||= PhoneNumberToCarrierMapper.getInstance
   end
 
   def phone_util
     # Java class
-    @phone_util ||= PhoneNumberUtil.getInstance()
+    @phone_util ||= PhoneNumberUtil.getInstance
   end
 end

@@ -8,7 +8,7 @@ java_import com.google.i18n.phonenumbers.prefixmapper.PrefixFileReader
 java_import com.google.i18n.phonenumbers.PhoneNumberUtil
 java_import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper
 
-class PhoneNumber
+class PhoneNumberWrapper
   # Wrapper for the weirdness of using the Java libphonenumber library
   def initialize(match)
     @match = match
@@ -24,7 +24,10 @@ class PhoneNumber
   end
 
   def carrier
-    @carrier ||= carrier_mapper.getNameForNumber(match.number, Locale::ENGLISH)
+    @carrier ||= begin
+      name = carrier_mapper.getNameForNumber(match.number, Locale::ENGLISH)
+      name.empty? ? nil : name
+    end
   end
 
   def e164_format

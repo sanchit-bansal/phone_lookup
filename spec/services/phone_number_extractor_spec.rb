@@ -4,6 +4,12 @@ require "./services/phone_number_extractor"
 describe PhoneNumberExtractor do
   let(:service) { described_class }
 
+  describe "#parse" do
+    it "parses a valid number" do
+      service.parse("+6581234805")
+    end
+  end
+
   describe "#matches" do
     it "matches phone numbers from text" do
       matches = service.matches("+65 8 1234805")
@@ -24,7 +30,7 @@ describe PhoneNumberExtractor do
 
       matches = service.matches(contact_details)
 
-      expect(matches.size).to eq(2)
+      expect(matches.map(&:e164_format)).to match_array(["+447907709720", "+19292442432"])
     end
 
     it "matches numbers in challenging formats" do

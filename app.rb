@@ -1,18 +1,16 @@
-require "sinatra"
-require "sinatra/json"
+ENV['RACK_ENV'] ||= 'development'
 
-require "pry" if development?
+require 'bundler'
+Bundler.require :default, ENV['RACK_ENV'].to_sym
+
+require "./graph/schema"
+require "sinatra/json"
 require "sinatra/reloader" if development?
 
-require "./services/phone_number_extractor"
+configure { set :server, :puma }
 
-post "/matches" do
-  json(PhoneNumberExtractor.matches(params[:text]).map(&:to_h))
-<<<<<<< HEAD
-end
+post "/graph" do
+  payload = JSON.parse(request.body.read)
 
-get "/parse_number" do
-  json(PhoneNumberExtractor.parse(params[:number], params[:country]))
-=======
->>>>>>> master
+  json(Graph::Schema.execute(payload["query"], variables: payload["variables"] || {}))
 end

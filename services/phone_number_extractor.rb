@@ -12,10 +12,6 @@ class PhoneNumberExtractor
     end
   end
 
-  def self.parse(number, region = "US")
-    phone_util.parse(number, region)
-  end
-
   def self.phone_util
     @phone_util ||= PhoneNumberUtil.get_instance
   end

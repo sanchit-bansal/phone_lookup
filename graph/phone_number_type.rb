@@ -11,6 +11,8 @@ module Graph
 
     field :number_type, !types.String, "Mobile, landline etc"
 
+    field :valid, !types.Boolean, "Validity of the number by format"
+
     field :carrier, !types.String, <<~TEXT
       Offline attempt to identify the carrier.
 

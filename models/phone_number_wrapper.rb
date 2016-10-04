@@ -19,7 +19,8 @@ class PhoneNumberWrapper
       international_format: international_format,
       e164_format: e164_format,
       number_type: number_type,
-      carrier: carrier
+      carrier: carrier,
+      valid: valid?
     }
   end
 
@@ -38,8 +39,12 @@ class PhoneNumberWrapper
     @international_format ||= phone_util.format(match.number, PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL)
   end
 
+  def valid?
+    phone_util.isValidNumber(match.number)
+  end
+
   def number_type
-    @number_type ||= phone_util.getNumberType(match.number).toString
+    @number_type ||= phone_util.getNumberType(match.number).to_string
   end
 
 private
@@ -47,11 +52,11 @@ private
 
   def carrier_mapper
     # Java class
-    @carrier_mapper||= PhoneNumberToCarrierMapper.getInstance
+    @carrier_mapper||= PhoneNumberToCarrierMapper.get_instance
   end
 
   def phone_util
     # Java class
-    @phone_util ||= PhoneNumberUtil.getInstance
+    @phone_util ||= PhoneNumberUtil.get_instance
   end
 end

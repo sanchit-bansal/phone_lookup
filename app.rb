@@ -7,8 +7,6 @@ require "./graph/schema"
 require "sinatra/json"
 require "sinatra/reloader" if development?
 
-configure { set :server, :puma }
-
 post "/graph" do
   payload = JSON.parse(request.body.read)
 

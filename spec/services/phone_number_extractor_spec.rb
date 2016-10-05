@@ -33,4 +33,43 @@ describe PhoneNumberExtractor do
       expect(number.e164_format).to eq("+6581234805")
     end
   end
+
+  describe '#parse' do
+    let(:valid_numbers) do
+      {
+        uk_number:      "+44 7 907709720",
+        us_number:      "+1 971 344 8692",
+        china_number:   "+86 1380 173 1778",
+        hk_number:      "+852 6938 9820",
+        germany_number: "+49 160 2879 563",
+        uae_number:     "+971 4 360 2121",
+        russia_number:  "+7 701 736 2612",
+        indian_number:  "+91 9158 8851 81" # Reported by James Lewek
+      }
+    end
+
+    let(:invalid_numbers) do
+      {
+        us_number: "+1 777 777 777"
+      }
+    end
+
+    context "given a set of correctly formatted phone numbers from major countries" do
+      it 'returns true' do
+        valid_numbers.values.each do |number|
+          number = service.parse(number)
+          expect(number.valid?).to eq(true)
+        end
+      end
+    end
+
+    context "given a set of incorrectly formatted phone numbers" do
+      it 'returns false' do
+        invalid_numbers.values.each do |number|
+          invalid_number = service.parse(number)
+          expect(invalid_number.valid?).to eq(false)
+        end
+      end
+    end
+  end
 end

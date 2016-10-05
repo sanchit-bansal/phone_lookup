@@ -10,8 +10,8 @@ java_import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper
 
 class PhoneNumberWrapper
   # Wrapper for the weirdness of using the Java libphonenumber library
-  def initialize(match)
-    @match = match
+  def initialize(number)
+    @number = number
   end
 
   def to_h
@@ -26,29 +26,29 @@ class PhoneNumberWrapper
 
   def carrier
     @carrier ||= begin
-      name = carrier_mapper.getNameForNumber(match.number, Locale::ENGLISH)
+      name = carrier_mapper.getNameForNumber(number, Locale::ENGLISH)
       name.empty? ? nil : name
     end
   end
 
   def e164_format
-    @e164_format ||= phone_util.format(match.number, PhoneNumberUtil::PhoneNumberFormat::E164)
+    @e164_format ||= phone_util.format(number, PhoneNumberUtil::PhoneNumberFormat::E164)
   end
 
   def international_format
-    @international_format ||= phone_util.format(match.number, PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL)
+    @international_format ||= phone_util.format(number, PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL)
   end
 
   def valid?
-    phone_util.isValidNumber(match.number)
+    phone_util.isValidNumber(number)
   end
 
   def number_type
-    @number_type ||= phone_util.getNumberType(match.number).to_string
+    @number_type ||= phone_util.getNumberType(number).to_string
   end
 
 private
-  attr_reader :match
+  attr_reader :number
 
   def carrier_mapper
     # Java class

@@ -16,5 +16,15 @@ module Graph
         PhoneNumberExtractor.matches(arguments[:text])
       end
     end
+
+    field :parse_phone_number do
+      type PhoneNumberType
+      argument :number, !types.String
+      argument :region, types.String
+
+      resolve -> (object, arguments, context) do
+        PhoneNumberExtractor.parse(arguments[:number], arguments[:region])
+      end
+    end
   end
 end

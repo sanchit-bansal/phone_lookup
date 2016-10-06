@@ -1,17 +1,11 @@
-require "java"
-require "./jars/libphonenumber-7.4.3.jar"
-require "./jars/prefixmapper-2.45.jar"
-require "./jars/carrier-1.35.jar"
-
-java_import java.util.Locale
-java_import com.google.i18n.phonenumbers.prefixmapper.PrefixFileReader
-java_import com.google.i18n.phonenumbers.PhoneNumberUtil
-java_import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper
+require "./lib/phone_utility"
+require "./lib/carrier_mapper"
 
 class PhoneNumberWrapper
-  # Wrapper for the weirdness of using the Java libphonenumber library
-  def initialize(number)
+  def initialize(number, phone_util: PhoneUtility, carrier_mapper: CarrierMapper)
     @number = number
+    @phone_util = phone_util
+    @carrier_mapper = carrier_mapper
   end
 
   def to_h
@@ -26,37 +20,26 @@ class PhoneNumberWrapper
 
   def carrier
     @carrier ||= begin
-      name = carrier_mapper.getNameForNumber(number, Locale::ENGLISH)
-      name.empty? ? nil : name
+      carrier_mapper.name(number)
     end
   end
 
   def e164_format
-    @e164_format ||= phone_util.format(number, PhoneNumberUtil::PhoneNumberFormat::E164)
+    @e164_format ||= phone_util.format(number, :e164)
   end
 
   def international_format
-    @international_format ||= phone_util.format(number, PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL)
+    @international_format ||= phone_util.format(number, :international)
   end
 
   def valid?
-    phone_util.isValidNumber(number)
+    phone_util.valid?(number)
   end
 
   def number_type
-    @number_type ||= phone_util.getNumberType(number).to_string
+    @number_type ||= phone_util.number_type(number)
   end
 
 private
-  attr_reader :number
-
-  def carrier_mapper
-    # Java class
-    @carrier_mapper||= PhoneNumberToCarrierMapper.get_instance
-  end
-
-  def phone_util
-    # Java class
-    @phone_util ||= PhoneNumberUtil.get_instance
-  end
+  attr_reader :number, :phone_util, :carrier_mapper
 end

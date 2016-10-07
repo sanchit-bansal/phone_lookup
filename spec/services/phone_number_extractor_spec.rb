@@ -71,5 +71,11 @@ describe PhoneNumberExtractor do
         end
       end
     end
+
+    context "given a string that is not a number" do
+      it "returns nil" do
+        expect(service.parse("thisisnotaphonenumber")).to be_nil
+      end
+    end
   end
 end

@@ -9,7 +9,11 @@ class PhoneNumberExtractor
   end
 
   def self.parse(number, region = nil)
-    match = PhoneUtility.parse(number, region)
-    match ? PhoneNumberWrapper.new(match) : nil
+    begin
+      match = PhoneUtility.parse(number, region)
+      match ? PhoneNumberWrapper.new(match) : nil
+    rescue Java::ComGoogleI18nPhonenumbers::NumberParseException
+      nil
+    end
   end
 end

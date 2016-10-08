@@ -17,9 +17,9 @@ module Graph
       resolve -> (phone_number_wrapper, args, ctx) do
         phone_number_wrapper.valid?
       end
-    end 
+    end
 
-    field :carrier, !types.String, <<~TEXT
+    field :carrier, types.String, <<~TEXT
       Offline attempt to identify the carrier.
 
       This seems to work well except for numbers that have been ported to other carriers.

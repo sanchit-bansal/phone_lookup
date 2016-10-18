@@ -9,6 +9,7 @@ RSpec.describe "Posting to the GraphQL endpoint", type: :request do
           number_type
           carrier
           international_format
+          national_format
         }
       }
     GQL
@@ -21,7 +22,8 @@ RSpec.describe "Posting to the GraphQL endpoint", type: :request do
       "e164_format" => "+6581234805",
       "number_type" => "MOBILE",
       "carrier" => "SingTel", # I am a M1 subscriber actually
-      "international_format" => "+65 8123 4805"
+      "international_format" => "+65 8123 4805",
+      "national_format" => "8123 4805"
     })
   end
 end

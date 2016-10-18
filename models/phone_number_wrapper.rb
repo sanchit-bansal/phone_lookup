@@ -8,16 +8,6 @@ class PhoneNumberWrapper
     @carrier_mapper = carrier_mapper
   end
 
-  def to_h
-    {
-      international_format: international_format,
-      e164_format: e164_format,
-      number_type: number_type,
-      carrier: carrier,
-      valid: valid?
-    }
-  end
-
   def carrier
     @carrier ||= begin
       carrier_mapper.name(number)
@@ -32,8 +22,12 @@ class PhoneNumberWrapper
     @international_format ||= phone_util.format(number, :international)
   end
 
+  def national_format
+    @national_format ||= phone_util.format(number, :national)
+  end
+
   def valid?
-    phone_util.valid?(number)
+    @valid ||= phone_util.valid?(number)
   end
 
   def number_type

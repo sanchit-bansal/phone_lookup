@@ -6,7 +6,8 @@ class PhoneUtility
 
   FORMATS = {
     e164: PhoneNumberUtil::PhoneNumberFormat::E164,
-    international: PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL
+    international: PhoneNumberUtil::PhoneNumberFormat::INTERNATIONAL,
+    national: PhoneNumberUtil::PhoneNumberFormat::NATIONAL
   }.freeze
 
   def self.instance

@@ -19,8 +19,8 @@ module Graph
 
     field :parse_phone_number do
       type PhoneNumberType
-      argument :number, !types.String
-      argument :region, types.String
+      argument :number, !types.String, "The phone number"
+      argument :region, types.String, "Two digit ISO Alpha-2 region code"
 
       resolve -> (object, arguments, context) do
         PhoneNumberExtractor.parse(arguments[:number], arguments[:region])

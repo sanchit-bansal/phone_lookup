@@ -14,6 +14,10 @@ class PhoneNumberWrapper
     end
   end
 
+  def country_code
+    @country_code ||= number.getCountryCode
+  end
+
   def e164_format
     @e164_format ||= phone_util.format(number, :e164)
   end
@@ -24,6 +28,10 @@ class PhoneNumberWrapper
 
   def national_format
     @national_format ||= phone_util.format(number, :national)
+  end
+
+  def national_number
+    @national_number ||= number.national_number
   end
 
   def valid?

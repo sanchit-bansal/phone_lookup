@@ -5,11 +5,15 @@ module Graph
     name "PhoneNumber"
     description "An E164 validated phone number"
 
-    field :e164_format, !types.String, "Internationally recognized E164 format, no formatting. Example: +19179032036"
+    field :country_code, !types.String, "The Country Code of a number. Example: +1 917 351 4206 will will return 1 for the country code"
 
-    field :international_format, !types.String, "The local country format with country code. Example: +1 917 903 2036"
+    field :e164_format, !types.String, "Internationally recognized E164 format, no formatting. Example: +19173514206"
 
-    field :national_format, !types.String, "The local country format without country code. Example: (917) 903-2036"
+    field :international_format, !types.String, "The local country format with country code. Example: +1 917 351 4206"
+
+    field :national_format, !types.String, "The local country format without country code. Example: (917) 351-4206"
+
+    field :national_number, !types.String, "The phone number without the country code and formatting. Example: 9173514206"
 
     field :number_type, !types.String, "Mobile, landline etc"
 
